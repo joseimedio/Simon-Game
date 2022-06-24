@@ -3,6 +3,7 @@ var colorArray = ["green", "red", "yellow", "blue"];
 var keyboardInput = "";
 var mouseInput = "";
 var newGame = true;
+var level = 1;
 
 
 /***************************OBJECTS***************************/
@@ -46,9 +47,19 @@ var userSequence = {
 
 /***********************EVENT LISTENERS***********************/
 $(this).keypress(function(event){
-  keyboardInput = event.key;
-  machineSequence.empty();
-  machinePlays();
+  if(newGame){
+    keyboardInput = event.key;
+    machineSequence.empty();
+    machinePlays();
+  }
+});
+
+$("h1").click(function(event){
+  if(newGame){
+    keyboardInput = event.key;
+    machineSequence.empty();
+    machinePlays();
+  }
 });
 
 $(".btn").click(function(){
@@ -83,7 +94,13 @@ function machinePlays(){
   setTimeout(function(){
     machineSequence.addElement();
     machineSequence.playLastElement();
+    updateTitle();
   }, delay);
+}
+
+function updateTitle(){
+  $("h1").text('Level ' + level);
+  level++;
 }
 
 function userIsRight(){
@@ -132,4 +149,5 @@ function gameOver(){
   machineSequence.empty();
   gameOverAnimation();
   newGame = true;
+  level = 1;
 }
